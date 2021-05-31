@@ -1,4 +1,5 @@
 import {regexps} from "../regexps/pipBoy-regexp";
+import { PipBoyStatsModel, UserModel } from "../models/userModel";
 
 
 export const parseClassic = (text) => {
@@ -10,11 +11,11 @@ export const parseClassic = (text) => {
     const [, strength] = regexps.classicStrengthRegExp.exec(text);
     const [, precision] = regexps.classicPrecisionRegExp.exec(text);
     const [, endurance] = regexps.classicEnduranceRegExp.exec(text);
-    const [, hunger] = regexps.classicHungerRegExp.exec(text);
+    // const [, hunger] = regexps.classicHungerRegExp.exec(text);
     const [, health] = regexps.classicHealthRegExp.exec(text);
-    const [, faction] = regexps.classicFactionRegExp.exec(text);
-    const [, version] = regexps.classicVerisonRegExp.exec(text);
-    const [, gang] = regexps.classicGangRegExp.exec(text);
+    // const [, faction] = regexps.classicFactionRegExp.exec(text);
+    // const [, version] = regexps.classicVerisonRegExp.exec(text);
+    const [, gang] = regexps.classicGangRegExp.exec(text)||'';
 
 
     let dzens;
@@ -42,13 +43,13 @@ export const parseClassic = (text) => {
 
 
     const data = {
-        version,
-        faction,
+        // version,
+        // faction,
         health,
         name,
         damage,
         armor,
-        hunger,
+        // hunger,
         strength,
         precision,
         charisma,
@@ -73,11 +74,11 @@ export const parseSimple = (text) => {
     const [, strength] = regexps.simpleStrengthRegExp.exec(text);
     const [, endurance] = regexps.simpleEnduranceRegExp.exec(text);
     const [, precision] = regexps.simplePrecisionRegExp.exec(text);
-    const [, hunger] = regexps.simpleHungerRegExp.exec(text);
+    // const [, hunger] = regexps.simpleHungerRegExp.exec(text);
     const [, health] = regexps.simpleHealthRegExp.exec(text);
     const [, armor] = regexps.simpleArmorRegExp.exec(text);
     const [, name] = regexps.simpleNameRegExp.exec(text);
-    const [, faction] = regexps.simpleFactionRegExp.exec(text);
+    // const [, faction] = regexps.simpleFactionRegExp.exec(text);
     const [, damage] = regexps.simpleDamageRegExp.exec(text);
     const [, gang] = regexps.simpleGangRegExp.exec(text);
     let dzens;
@@ -95,12 +96,12 @@ export const parseSimple = (text) => {
     }
 
     const data = {
-        name,
+        name: name.replace(/\w+$/, '').replace(/[\🏵]/g,  ''),
         gang,
         armor,
-        faction,
+        // faction,
         health,
-        hunger,
+        // hunger,
         strength,
         precision,
         charisma,
@@ -127,3 +128,6 @@ export const parsePip = ({text, forward_date: forwardDate}, isClassic) => {
 
     return {...parseSimple(text), date: forwardDate};
 };
+
+
+
