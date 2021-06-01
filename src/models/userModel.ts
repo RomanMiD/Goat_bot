@@ -22,13 +22,13 @@ export interface UserDocument extends Document {
     tgId: string | number;
     username: string;
     role: string
-
+    gang?: string
     getPips(): [];
 
 }
 
 export interface PipBoyStatsDocument extends Document {
-    gang: string,
+    gang?: string,
     squad: string,
     name: string,
     health: number,
@@ -44,7 +44,7 @@ export interface PipBoyStatsDocument extends Document {
 
 }
 
-const UserSchema = new Schema<UserDocument>({
+export const UserSchema = new Schema<UserDocument>({
         tgId: {
             required: true,
             type: Number
@@ -84,8 +84,8 @@ const PipBoySchema = new Schema<PipBoyStatsDocument>({
         }
     });
 
-UserSchema.methods.getPips = function () {
-    return PipBoyStatsModel.find().where("userId").in([this.tgId])
+UserSchema.methods.getPips = async function () {
+    return await PipBoyStatsModel.find().where("userId").in([this.tgId])
 }
 export const PipBoyStatsModel = model<PipBoyStatsDocument>("pip-boys", PipBoySchema);
 export const UserModel = model<UserDocument>("Users", UserSchema);
