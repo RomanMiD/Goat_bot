@@ -1,6 +1,9 @@
-import { model, Schema } from "mongoose";
-import { GangModel } from "./gangModel";
-
+import { model, Schema, Document } from "mongoose";
+export interface GoatDocument extends Document{
+    name: string;
+    leaderId: string;
+    gangs: string[]
+}
 
 const GoatSchema = new Schema({
     name: String,
@@ -9,4 +12,4 @@ const GoatSchema = new Schema({
 })
 
 
-export const GoatModel = model('Goats', GoatSchema)
+export const GoatModel = model<GoatDocument>('Goats', GoatSchema)
